@@ -67,3 +67,10 @@ MIT License
 ## 👤 Author
 
 Made with 💛 by [bjjs20](https://github.com/bjjs20)
+Want to support me? [deposit on Mitosis Expedition with my ref Code](https://app.mitosis.org?referral=43RWUK)
+
+---
+
+## 🙏 Special thanks to
+
+MurinXDA for the Morse tools linked in the app [MurinXDA](https://x.com/murinXDA)
