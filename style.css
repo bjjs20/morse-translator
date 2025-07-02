@@ -27,6 +27,11 @@ a {
   justify-content: space-between;
   margin: 5px 5px 15px 5px;
 }
+
+.bold {
+  font-weight: bold;
+}
+
 button {
   flex: 1;
   margin: 0 5px;
