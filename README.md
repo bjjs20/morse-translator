@@ -74,3 +74,5 @@ Want to support me? [deposit on Mitosis Expedition with my ref Code](https://app
 ## 🙏 Special thanks to
 
 MurinXDA for the Morse tools linked in the app [MurinXDA](https://x.com/murinXDA)
+Kumatycoon for the Morse analytics link on Dune [Kumatycoon](https://x.com/chockymilkLLC)
+Eddy for the Morse ranking link on Dune [Eddy](https://x.com/0xEddy1)
