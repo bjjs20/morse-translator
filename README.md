@@ -1,4 +1,4 @@
-# 🟦 Morse Translator Chrome Extension
+# 🐶🤖 Morse Translator Chrome Extension
 
 This Chrome extension lets you:
 - 🔁 Translate text ↔ Morse code
