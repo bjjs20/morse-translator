@@ -9,7 +9,11 @@ const morseCode = {
   "0": "-----", "1": ".----", "2": "..---", "3": "...--",
   "4": "....-", "5": ".....", "6": "-....", "7": "--...",
   "8": "---..", "9": "----.",
-  ".": ".-.-.-", ",": "--..--", "?": "..--..", " ": "/"
+  ".": ".-.-.-", ",": "--..--", "?": "..--..", " ": "/",
+  "!": "-.-.--", "@": ".--.-.", ":": "---...", ";": "-.-.-.",
+  "=": "-...-", "+": ".-.-.", "-": "-....-", "/": "-..-.",
+  "(": "-.--.", ")": "-.--.-", "'": ".----.", "\"": ".-..-.",
+  "$": "...-..-", "&": ".-...", "_": "..--.-"
 };
 
 const reverseMorse = Object.fromEntries(
@@ -17,7 +21,11 @@ const reverseMorse = Object.fromEntries(
 );
 
 function textToMorse(text) {
-  return text.toUpperCase().split('').map(c => morseCode[c] || '').join(' ');
+  const cleanText = text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  return [...cleanText].map(c => {
+    const key = /[a-z]/i.test(c) ? c.toUpperCase() : c;
+    return morseCode[key] || '';
+  }).join(' ');
 }
 
 function morseToText(code) {
