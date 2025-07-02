@@ -1,13 +1,25 @@
 document.addEventListener("DOMContentLoaded", () => {
   const input = document.getElementById("input");
   const output = document.getElementById("output");
+  
+  function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+      console.log("Copied to clipboard!");
+    }).catch(err => {
+      console.error("Clipboard error:", err);
+    });
+  }
 
   document.getElementById("toMorse").addEventListener("click", () => {
-    output.value = textToMorse(input.value);
+    const result = textToMorse(input.value);
+    output.value = result;
+    copyToClipboard(result);
   });
 
   document.getElementById("toText").addEventListener("click", () => {
-    output.value = morseToText(input.value);
+    const result = morseToText(input.value);
+    output.value = result;
+    copyToClipboard(result);
   });
 
   const image = document.getElementById("randomIcon");
