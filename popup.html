@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Morse Translator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1 style="display: flex; align-items: center; gap: 10px; margin-top:3px;">
+    <img id="randomIcon" src="morses/1.png" alt="icon" width="64">
+    Morse Translator
+  </h1>
+  <textarea id="input" placeholder="Enter text or Morse code here"></textarea>
+  <div class="buttons">
+    <button id="toMorse">Text -> Morse</button>
+    <button id="toText">Morse -> Text</button>
+  </div>
+  <textarea id="output" placeholder="Output..." readonly></textarea>
+  <div id="tools">
+    <a href="https://morse.mitosis.org/" target="_blank">Morse page</a> |
+    <a href="https://morse-reroller.vercel.app/" target="_blank">Morse Reroller</a> |
+    <a href="https://murinxda.budibase.app/app/morse-rarity#/reroll-checker" target="_blank">Morse Tools</a>
+  </div>
+  <div id="credit">a tiny app by <a href="https://x.com/bjjs_20" target="_blank">BJJS</a></div>
+  <script src="morse.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
