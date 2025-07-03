@@ -9,12 +9,18 @@
     <img id="randomIcon" src="morses/1.png" alt="icon" width="64">
     Morse Translator
   </h1>
-  <textarea id="input" placeholder="Enter text or Morse code here"></textarea>
+   <div>
+    <textarea id="input" placeholder="Enter text or Morse code here"></textarea>
+    <span id="playMorseInput" class="soundButton" title="Play Morse">&#128266</span>
+  </div>
   <div class="buttons">
     <button id="toMorse">Text -> Morse</button>
     <button id="toText">Morse -> Text</button>
   </div>
-  <textarea id="output" placeholder="Output..." readonly></textarea>
+  <div>
+    <textarea id="output" placeholder="Output..." readonly></textarea>
+    <span id="playMorseOutput" class="soundButton" title="Play Morse">&#128266</span>
+  </div>
   <div id="tools">
     <a href="https://morse.mitosis.org/" target="_blank" class="bold">Official Morse page</a> <br />
     <a href="https://morse-reroller.vercel.app/" target="_blank" title="To reroll your Morse NFT seamlessly by MurinXDA" >Morse Reroller</a> |
