@@ -62,11 +62,15 @@ document.getElementById("toText").addEventListener("click", () => {
 });
 
 function copyToClipboard(text) {
+  if (isValidMorse(text)) {
     navigator.clipboard.writeText(text).then(() => {
       console.log("Copied to clipboard!");
     }).catch(err => {
       console.error("Clipboard error:", err);
     });
+  } else {
+    console.log("Not Morse – not copied.");
+  }
 }
 
 function updateIconsState() {
