@@ -9,17 +9,23 @@
     <img id="randomIcon" src="morses/1.png" alt="icon" width="64">
     Morse Translator
   </h1>
-   <div>
+   <div id="blockInput">
     <textarea id="input" placeholder="Enter text or Morse code here"></textarea>
-    <span id="playMorseInput" class="soundButton" title="Play Morse">&#128266</span>
+    <div id="soundButtonsInput">
+      <span id="playMorseInput" class="soundButtonPlay" title="Play Morse">&#128266</span>
+      <span id="saveMorseInput" class="soundButtonSave" title="Save Morse sound as file">&#128190</span>
+    </div>
   </div>
   <div class="buttons">
     <button id="toMorse">Text -> Morse</button>
     <button id="toText">Morse -> Text</button>
   </div>
-  <div>
+  <div id="blockOutput">
     <textarea id="output" placeholder="Output..." readonly></textarea>
-    <span id="playMorseOutput" class="soundButton" title="Play Morse">&#128266</span>
+    <div id="soundButtonsOutput">
+      <span id="playMorseOutput" class="soundButtonPlay" title="Play Morse">&#128266</span>
+      <span id="saveMorseOutput" class="soundButtonSave" title="Save Morse sound as file">&#128190</span>
+    </div>
   </div>
   <div id="tools">
     <a href="https://morse.mitosis.org/" target="_blank" class="bold">Official Morse page</a> <br />
