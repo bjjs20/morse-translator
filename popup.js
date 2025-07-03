@@ -2,6 +2,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const input = document.getElementById("input");
   const output = document.getElementById("output");
   
+  document.getElementById("playMorseInput").addEventListener("click", () => {
+    const morse = document.getElementById("input").value;
+    playMorse(morse);
+  });
+  
+  document.getElementById("playMorseOutput").addEventListener("click", () => {
+    const morse = document.getElementById("output").value;
+    playMorse(morse);
+  });
+  
   function copyToClipboard(text) {
     navigator.clipboard.writeText(text).then(() => {
       console.log("Copied to clipboard!");
@@ -38,5 +48,40 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   updateImage();
-  setInterval(updateImage, 7000); // change every 7 seconds
+  setInterval(updateImage, 5000); // change every 5 seconds
 });
+
+function playMorse(morseCode) {
+  const context = new (window.AudioContext || window.webkitAudioContext)();
+  let time = context.currentTime;
+
+  const unit = 0.08; // seconds per dot
+
+  for (const symbol of morseCode) {
+    if (symbol === '.') {
+      playBeep(context, time, unit);
+      time += unit * 2;
+    } else if (symbol === '-') {
+      playBeep(context, time, unit * 3);
+      time += unit * 4;
+    } else if (symbol === ' ') {
+      time += unit * 2;
+    } else if (symbol === '/') {
+      time += unit * 6;
+    }
+  }
+}
+
+function playBeep(context, startTime, duration) {
+  const oscillator = context.createOscillator();
+  const gainNode = context.createGain();
+
+  oscillator.type = 'sine';
+  oscillator.frequency.setValueAtTime(600, startTime); // 600 Hz
+
+  oscillator.connect(gainNode);
+  gainNode.connect(context.destination);
+
+  oscillator.start(startTime);
+  oscillator.stop(startTime + duration);
+}
