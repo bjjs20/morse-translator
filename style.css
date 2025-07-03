@@ -28,12 +28,32 @@ a {
   margin: 5px 5px 15px 5px;
 }
 
-.soundButton {
+.soundButtonPlay {
  position: relative;
- top: -11px;
- left: 3px;
  cursor: pointer;
  font-size: 20px;
+}
+
+.soundButtonSave {
+ position: relative;
+ cursor: pointer;
+ font-size: 20px;
+}
+
+#soundButtonsInput {
+  position: relative;
+  top:-65px;
+  left:8px;
+  float: right;
+  width:10%;
+}
+
+#soundButtonsOutput {
+  position: relative;
+  top:-65px;
+  left:8px;
+  float: right;
+  width:10%;
 }
 
 .bold {
