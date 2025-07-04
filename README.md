@@ -2,8 +2,6 @@
 
 This Chrome extension lets you:
 - 🔁 Translate text ↔ Morse code
-- 🤖 Auto copy output text to clipboard if Morse code
-- 🎞️ Display a random Morse-themed image that changes every 5 seconds with a smooth fade effect
 - 🔊 Play the Morse code as sound
 - 💾 Save your sound morse as wav file
 ---
@@ -46,6 +44,8 @@ morse-translator/
 ## ✅ Features
 
 - Bidirectional Morse code translation
+- Auto-copy the output text to clipboard if Morse code
+- Generate a Morse code that you can listen and / or save as WAV file
 - Smooth random image animation every 5 seconds
 - Lightweight, no internet required
 
