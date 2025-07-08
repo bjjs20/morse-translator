@@ -21,7 +21,7 @@ const reverseMorse = Object.fromEntries(
 );
 
 function textToMorse(text) {
-  const cleanText = text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  const cleanText = text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\r\n|\r|\n/g, " ");
   return [...cleanText].map(c => {
     const key = /[a-z]/i.test(c) ? c.toUpperCase() : c;
     return morseCode[key] || '';
@@ -29,5 +29,15 @@ function textToMorse(text) {
 }
 
 function morseToText(code) {
-  return code.split(' ').map(m => reverseMorse[m] || '').join('');
+  // Remplace les retours à la ligne par des slashes
+  const cleanedCode = code.replace(/\r\n|\r|\n/g, ' / ');
+  return cleanedCode
+    .trim()
+    .split(/\s+/) // Séparation par espaces ou slashs insérés
+    .map(m => reverseMorse[m] || '')
+    .join('');
+}
+
+function isValidMorse(text) {
+  return /^[.\-\/\s]+$/.test(text.trim());
 }
