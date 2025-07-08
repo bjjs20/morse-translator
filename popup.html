@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
   <title>Morse Translator</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -9,7 +10,14 @@
     <img id="randomIcon" src="morses/1.png" alt="icon" width="64">
     Morse Translator
   </h1>
-   <div id="blockInput">
+  <div id="fileLoad">
+    <span id="loadWav" class="soundButtonLoad" title="Load & Decode WAV">📂 load wav file</span> <input type="file" id="wavInput" accept=".wav"><br />
+    <span id="wpmBlock">
+      <label>Morse speed: <input id="wpm" type="number" placeholder="auto" min="1"></label>
+      <span id="detectedWPM"></span>
+    </span>
+  </div>
+  <div id="blockInput">
     <textarea id="input" placeholder="Enter text or Morse code here"></textarea>
     <div id="soundButtonsInput">
       <span id="playMorseInput" class="soundButtonPlay" title="Play Morse">&#128266</span>
@@ -17,8 +25,8 @@
     </div>
   </div>
   <div class="buttons">
-    <button id="toMorse">Text -> Morse</button>
-    <button id="toText">Morse -> Text</button>
+    <button id="toMorse">Text → Morse</button>
+    <button id="toText">Morse → Text</button>
   </div>
   <div id="blockOutput">
     <textarea id="output" placeholder="Output..." readonly></textarea>
