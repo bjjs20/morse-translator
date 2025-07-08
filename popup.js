@@ -1,3 +1,6 @@
+let playContext = null;    // will hold your AudioContext when playing
+let playTimeouts = [];     // references to any scheduled stops
+
 document.addEventListener("DOMContentLoaded", () => {
   const image = document.getElementById("randomIcon");
 
@@ -44,15 +47,29 @@ wpm.addEventListener('click', async () => {
     output.value = result;
     updateIconsState();
 });
+
+  
   
 document.getElementById("playMorseInput").addEventListener("click", () => {
     const morse = document.getElementById("input").value;
-    playMorse(morse);
+  if (playContext) {
+    // already playing → stop it
+    stopMorse();
+  } else {
+    // not playing → start it
+    playMorseToggle(morse);
+  }
 });
   
 document.getElementById("playMorseOutput").addEventListener("click", () => {
     const morse = document.getElementById("output").value;
-    playMorse(morse);
+  if (playContext) {
+    // already playing → stop it
+    stopMorse();
+  } else {
+    // not playing → start it
+    playMorseToggle(morse);
+  }
 });
   
 document.getElementById("saveMorseInput").addEventListener("click", () => {
@@ -76,6 +93,10 @@ document.getElementById("input").addEventListener('input', () => {
     updateIconsState();
     const inputValue = input.value.trim();
     const inputIsMorse = isValidMorse(inputValue);
+        
+    fileInput.value = '';          // reset file selection
+    stopMorse(); // stop playing current morse
+    
     if(inputIsMorse){
       const result = morseToText(input.value);
       output.value = result;
@@ -132,39 +153,64 @@ function updateIconsState() {
   
 }
 
-function playMorse(morseCode) {
-  const context = new (window.AudioContext || window.webkitAudioContext)();
-  let time = context.currentTime;
+function playMorseToggle(code) {
+  const ctx  = new (window.AudioContext || window.webkitAudioContext)();
+  playContext = ctx;
 
-  const unit = 0.08; // seconds per dot
+  let t = ctx.currentTime;
+  const unit = 0.08;
 
-  for (const symbol of morseCode) {
-    if (symbol === '.') {
-      playBeep(context, time, unit);
-      time += unit * 2;
-    } else if (symbol === '-') {
-      playBeep(context, time, unit * 3);
-      time += unit * 4;
-    } else if (symbol === ' ') {
-      time += unit * 2;
-    } else if (symbol === '/') {
-      time += unit * 6;
+  // schedule each beep and remember the node & stop timeout
+  for (const c of code) {
+    if (c === '.') {
+      scheduleBeep(ctx, t, unit);
+      t += unit * 2;
+    } else if (c === '-') {
+      scheduleBeep(ctx, t, unit * 3);
+      t += unit * 4;
+    } else if (c === ' ') {
+      t += unit * 2;
+    } else if (c === '/') {
+      t += unit * 6;
     }
   }
+
+  // when the last beep is done, clear context automatically
+  playTimeouts.push(setTimeout(() => stopMorse(), (t - ctx.currentTime) * 1000 + 50));
 }
 
-function playBeep(context, startTime, duration) {
-  const oscillator = context.createOscillator();
-  const gainNode = context.createGain();
+function scheduleBeep(ctx, start, duration) {
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.frequency.setValueAtTime(600, start);
+  osc.connect(gain); gain.connect(ctx.destination);
+  osc.start(start);
+  osc.stop(start + duration);
 
-  oscillator.type = 'sine';
-  oscillator.frequency.setValueAtTime(600, startTime); // 600 Hz
+  // remember to force‐stop this oscillator if user clicks “stop”
+  playTimeouts.push({ osc, stopTime: start + duration });
+}
 
-  oscillator.connect(gainNode);
-  gainNode.connect(context.destination);
+/**
+ * Stop all scheduled beeps & close the AudioContext.
+ */
+function stopMorse() {
+  // clear any scheduled JS timeouts
+  playTimeouts.forEach(to => {
+    if (to instanceof Object && to.osc) {
+      // stop any oscillators that haven't fired
+      try { to.osc.stop(); } catch(e){/*ignore*/} 
+    } else {
+      clearTimeout(to);
+    }
+  });
+  playTimeouts = [];
 
-  oscillator.start(startTime);
-  oscillator.stop(startTime + duration);
+  // shut down the context
+  if (playContext) {
+    playContext.close();
+    playContext = null;
+  }
 }
 
 function saveMorseAsWav(morseCode) {
