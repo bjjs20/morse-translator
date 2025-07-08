@@ -26,6 +26,24 @@ const saveIconOutput = document.getElementById("saveMorseOutput");
 
 const input = document.getElementById("input");
 const output = document.getElementById("output");
+
+const loadBtn = document.getElementById('loadWav');
+const fileInput = document.getElementById('wavInput');
+  
+loadBtn.onclick = () => fileInput.click();
+fileInput.addEventListener('change', async () => {
+    await decodeWav();
+    const result = morseToText(input.value);
+    output.value = result;
+    updateIconsState();
+});
+
+wpm.addEventListener('click', async () => {
+    await decodeWav();
+    const result = morseToText(input.value);
+    output.value = result;
+    updateIconsState();
+});
   
 document.getElementById("playMorseInput").addEventListener("click", () => {
     const morse = document.getElementById("input").value;
@@ -54,10 +72,26 @@ document.getElementById("toMorse").addEventListener("click", () => {
     updateIconsState();
 });
 
+document.getElementById("input").addEventListener('input', () => {
+    updateIconsState();
+    const inputValue = input.value.trim();
+    const inputIsMorse = isValidMorse(inputValue);
+    if(inputIsMorse){
+      const result = morseToText(input.value);
+      output.value = result;
+      updateIconsState();
+    } else {
+      const result = textToMorse(input.value);
+      output.value = result;
+      copyToClipboard(result);
+      updateIconsState();
+    }
+});
+
+
 document.getElementById("toText").addEventListener("click", () => {
     const result = morseToText(input.value);
     output.value = result;
-    copyToClipboard(result);
     updateIconsState();
 });
 
@@ -76,6 +110,10 @@ function copyToClipboard(text) {
 function updateIconsState() {
   const inputValue = input.value.trim();
   const inputIsMorse = isValidMorse(inputValue);
+  const file = document.getElementById('wavInput').files[0];
+  
+  wpmBlock.style.opacity = file ? 1 : 0.3;
+  wpmBlock.style.pointerEvents = file ? 'auto' : 'none';
   playIconInput.style.opacity = inputIsMorse ? 1 : 0.3;
   playIconInput.style.pointerEvents = inputIsMorse ? 'auto' : 'none';
   saveIconInput.style.opacity = inputIsMorse ? 1 : 0.3;
@@ -92,10 +130,6 @@ function updateIconsState() {
   playIconOutput.title = outputIsMorse ? "Play Morse" : "Output is not Morse";
   saveIconOutput.title = outputIsMorse ? "Save Morse as WAV" : "Output is not Morse";  
   
-}
-
-function isValidMorse(text) {
-  return /^[.\-\/\s]+$/.test(text.trim());
 }
 
 function playMorse(morseCode) {
@@ -156,4 +190,60 @@ function saveMorseAsWav(morseCode) {
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a"); a.href = url; a.download = "morse.wav"; a.click();
   URL.revokeObjectURL(url);
+}
+
+async function decodeWav() {
+  const file = document.getElementById('wavInput').files[0];
+  if (!file) return;
+  const arrayBuffer = await file.arrayBuffer();
+  const ctx = new (window.AudioContext||window.webkitAudioContext)();
+  const audioBuf = await ctx.decodeAudioData(arrayBuffer);
+  const data = audioBuf.getChannelData(0), sr = audioBuf.sampleRate;
+  // RMS envelope
+  const winSize = Math.floor(0.010*sr), hopSize = Math.floor(winSize/2);
+  const env = [];
+  for (let i=0; i+winSize<=data.length; i+=hopSize) {
+    let sum=0; for (let j=0; j<winSize; j++) sum += data[i+j]*data[i+j];
+    env.push(Math.sqrt(sum/winSize));
+  }
+  // threshold on first 5s
+  const firstFrames = Math.min(env.length, Math.floor((5*sr)/hopSize));
+  const subset = env.slice(0, firstFrames);
+  const mean = subset.reduce((a,b)=>a+b,0)/subset.length;
+  const std = Math.sqrt(subset.reduce((a,b)=>a+(b-mean)**2,0)/subset.length);
+  const thr = mean + 0.5*std;
+  const sig = env.map(v=>v>thr?1:0);
+  // runs
+  const runs=[]; let cur=sig[0],cnt=1;
+  for (let i=1;i<sig.length;i++){
+    if (sig[i]===cur) cnt++;
+    else { runs.push({v:cur,l:cnt}); cur=sig[i]; cnt=1; }
+  }
+  runs.push({v:cur,l:cnt});
+  // determine dotFrames
+  const toneRuns = runs.filter(r=>r.v===1).map(r=>r.l);
+  let dotFrames;
+  const wpmInput = parseFloat(document.getElementById('wpm').value);
+  if (wpmInput>0) {
+    const dotSec = 1.2/wpmInput;
+    dotFrames = Math.max(1, Math.round(dotSec*sr/hopSize));
+  } else {
+    dotFrames = Math.max(1, Math.min(...toneRuns));
+    const dotSec = (dotFrames*hopSize)/sr;
+    const detected = 1.2/dotSec;
+    document.getElementById('detectedWPM').innerText = '(Detected: '+detected.toFixed(1)+' WPM)';
+  }
+  const letterGap = 3*dotFrames, wordGap = 7*dotFrames;
+  const minRun = Math.max(1, Math.floor(dotFrames/2));
+  const clean = runs.map(r=>{ if(r.v===0&&r.l<minRun) r.v=1; return r; }).filter(r=>r.l>=minRun);
+  let morse='', letter='';
+  clean.forEach(r=>{
+    if (r.v===1) letter += r.l<dotFrames*2?'.':'-';
+    else {
+      if(r.l>=wordGap){ morse+=letter+' / '; letter=''; }
+      else if(r.l>=letterGap){ morse+=letter+' '; letter=''; }
+    }
+  });
+  morse+=letter;
+  document.getElementById('input').value = morse.trim();
 }
