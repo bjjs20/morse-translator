@@ -43,7 +43,7 @@ morse-translator/
 
 ## ✅ Features
 
-- Bidirectional Morse code translation
+- Bidirectional Morse code translation (text and sound)
 - Auto-copy the output text to clipboard if Morse code
 - Generate a Morse code that you can listen and / or save as WAV file
 - Smooth random image animation every 5 seconds
