@@ -40,6 +40,33 @@ a {
  font-size: 20px;
 }
 
+.soundButtonLoad {
+ position: relative;
+ cursor: pointer;
+}
+
+#fileLoad{
+   font-size: 15px;
+   margin-bottom: 5px;
+}
+
+#detectedWPM{
+  font-style:italic;
+}
+
+#wpm{
+  width: 43px;
+  font-size: 12px;
+}
+
+#wpmBlock{
+  font-size: 12px;
+}
+
+#wavInput{
+  display:none;
+}
+
 #soundButtonsInput {
   position: relative;
   top:-65px;
