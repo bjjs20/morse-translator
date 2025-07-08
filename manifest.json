@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Morse Translator",
-  "version": "1.0",
+  "version": "2.0",
   "description": "Translate text to and from Morse code.",
   "action": {
     "default_popup": "popup.html",
