@@ -2,14 +2,19 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Morse Translator</title>
+  <title>The Morselator</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1 style="display: flex; align-items: center; gap: 10px; margin-top:3px;">
+  <div id="randomIconContainer">
     <img id="randomIcon" src="morses/1.png" alt="icon" width="64">
-    Morse Translator
-  </h1>
+  </div>
+  <div id="titleContainer">
+    <h1>
+      The Morselator
+    </h1>
+    <h3>- .... . / -- --- .-. ... . .-.. .- - --- .-.</h3>
+  </div>
   <div id="fileLoad">
     <span id="loadWav" class="soundButtonLoad" title="Load & Decode WAV">📂 load wav file</span> <input type="file" id="wavInput" accept=".wav"><br />
     <span id="wpmBlock">
@@ -18,7 +23,7 @@
     </span>
   </div>
   <div id="blockInput">
-    <textarea id="input" placeholder="Enter text or Morse code here"></textarea>
+    <textarea id="input" placeholder="Gmorse! Please, enter text or Morse code here"></textarea>
     <div id="soundButtonsInput">
       <span id="playMorseInput" class="soundButtonPlay" title="Play Morse">&#128266</span>
       <span id="saveMorseInput" class="soundButtonSave" title="Save Morse sound as file">&#128190</span>
