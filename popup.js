@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     image.classList.add("fade-out");
     setTimeout(() => {
       const randomNum = Math.floor(Math.random() * 8) + 1;
-      image.src = chrome.runtime.getURL(`morses/${randomNum}.png`);
+      image.src = `morses/${randomNum}.png`;
       image.classList.remove("fade-out");
       image.classList.add("fade-in");
       setTimeout(() => {
@@ -16,6 +16,26 @@ document.addEventListener("DOMContentLoaded", () => {
       }, 400);
     }, 400);
   }
+  
+  const wpmInput     = document.getElementById('wpm');
+  const detectedSpan = document.getElementById('detectedWPM');
+
+  // Whenever the user focuses or clicks on the WPM spinner,
+  // if the field is empty but we have a detected value, seed it.
+  function seedWpmFromDetected() {
+    if (!wpmInput.value) {
+      // extract the number (e.g. "23.5") from "(Detected: 23.5 WPM)"
+      const match = detectedSpan.textContent.match(/([\d.]+)/);
+      if (match) {
+        wpmInput.value = match[1];
+      }
+    }
+  }
+
+  // Seed on focus (covers typing in)…
+  wpmInput.addEventListener('focus', seedWpmFromDetected);
+  // …and on mousedown (covers clicking the up/down arrows)
+  wpmInput.addEventListener('mousedown', seedWpmFromDetected);
 
   updateImage();
   setInterval(updateImage, 5000); // change every 5 seconds
@@ -41,7 +61,7 @@ fileInput.addEventListener('change', async () => {
     updateIconsState();
 });
 
-wpm.addEventListener('click', async () => {
+wpm.addEventListener('input', async () => {
     await decodeWav();
     const result = morseToText(input.value);
     output.value = result;
@@ -154,6 +174,10 @@ function updateIconsState() {
 }
 
 function playMorseToggle(code) {
+   // clean the morse code
+  let normalized = cleanMorseCode(code)
+
+  // 2) Create and track the AudioContext
   const ctx  = new (window.AudioContext || window.webkitAudioContext)();
   playContext = ctx;
 
@@ -161,7 +185,7 @@ function playMorseToggle(code) {
   const unit = 0.08;
 
   // schedule each beep and remember the node & stop timeout
-  for (const c of code) {
+  for (const c of normalized) {
     if (c === '.') {
       scheduleBeep(ctx, t, unit);
       t += unit * 2;
@@ -214,17 +238,21 @@ function stopMorse() {
 }
 
 function saveMorseAsWav(morseCode) {
+   // clean the morse code
+  let normalized = cleanMorseCode(morseCode);
+
   const sr = 44100, unit = 0.08, samples = [];
   const beep = d => { let l = sr * d | 0;
     for (let i=0;i<l;i++) samples.push(Math.sin(2*Math.PI*600*i/sr)); };
   const sil = d => { let l = sr * d | 0;
     for (let i=0;i<l;i++) samples.push(0); };
-  for (const s of morseCode) {
+  for (const s of normalized) {
     if (s === '.') beep(unit), sil(unit);
     else if (s === '-') beep(unit*3), sil(unit);
     else if (s === ' ') sil(unit*2);
     else if (s === '/') sil(unit*6);
   }
+  
   const b = new ArrayBuffer(44 + samples.length*2), v = new DataView(b);
   const wr = (o,s) => s.split('').forEach((c,i)=>v.setUint8(o+i,c.charCodeAt(0)));
   wr(0,"RIFF"); v.setUint32(4,36+samples.length*2,true); wr(8,"WAVEfmt ");
@@ -252,8 +280,8 @@ async function decodeWav() {
     let sum=0; for (let j=0; j<winSize; j++) sum += data[i+j]*data[i+j];
     env.push(Math.sqrt(sum/winSize));
   }
-  // threshold on first 5s
-  const firstFrames = Math.min(env.length, Math.floor((5*sr)/hopSize));
+  // threshold on first 30s
+  const firstFrames = Math.min(env.length, Math.floor((30*sr)/hopSize));
   const subset = env.slice(0, firstFrames);
   const mean = subset.reduce((a,b)=>a+b,0)/subset.length;
   const std = Math.sqrt(subset.reduce((a,b)=>a+(b-mean)**2,0)/subset.length);
