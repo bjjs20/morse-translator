@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Morselator</title>
+  <link rel="stylesheet" href="style_web.css">
+  <style>
+
+  </style>
+  
+</head>
+<body>
+  <div id="app-container">
+    <div id="app-body">
+  <div id="randomIconContainer">
+    <img id="randomIcon" src="morses/1.png" alt="icon" width="64">
+  </div>
+  <div id="titleContainer">
+    <h1>
+      The Morselator
+    </h1>
+    <h3>- .... . / -- --- .-. ... . .-.. .- - --- .-.</h3>
+  </div>
+  <div id="fileLoad">
+    <span id="loadWav" class="soundButtonLoad" title="Load & Decode WAV">📂 load wav file</span> <input type="file" id="wavInput" accept=".wav"><br />
+    <span id="wpmBlock">
+      <label>Morse speed: <input id="wpm" type="number" placeholder="auto" min="1"></label>
+      <span id="detectedWPM"></span>
+    </span>
+  </div>
+  <div id="blockInput">
+    <textarea id="input" placeholder="Gmorse! Please, enter text or Morse code here"></textarea>
+    <div id="soundButtonsInput">
+      <span id="playMorseInput" class="soundButtonPlay" title="Play Morse">&#128266</span>
+      <span id="saveMorseInput" class="soundButtonSave" title="Save Morse sound as file">&#128190</span>
+    </div>
+  </div>
+  <div class="buttons">
+    <button id="toMorse">Text → Morse</button>
+    <button id="toText">Morse → Text</button>
+  </div>
+  <div id="blockOutput">
+    <textarea id="output" placeholder="Output... (morse code is auto-copied in clipboard)" readonly></textarea>
+    <div id="soundButtonsOutput">
+      <span id="playMorseOutput" class="soundButtonPlay" title="Play Morse">&#128266</span>
+      <span id="saveMorseOutput" class="soundButtonSave" title="Save Morse sound as file">&#128190</span>
+    </div>
+  </div>
+  <div id="tools">
+    <a href="https://morse.mitosis.org/" target="_blank" class="bold">Official Morse page</a> <br />
+    <a href="https://morse-reroller.vercel.app/" target="_blank" title="To reroll your Morse NFT seamlessly by MurinXDA" >Morse Reroller</a> |
+    <a href="https://murinxda.budibase.app/app/morse-rarity#/reroll-checker" target="_blank" title="usefull Morse tools by MurinXDA">Morse Tools</a><br />
+    <a href="https://dune.com/kumatycoon/morse-nft-analytics" target="_blank" title="a complete Morse dashboard on Dune by Kumatycoon">Morse analytics</a> |
+    <a href="https://dune.com/berry11/morse-ranking" target="_blank" title="An analytics on Morse holders by Eddy">Morse ranking</a> </br>
+    <a href="https://www.dextools.io/app/en/ether/pair-explorer/0xdd3905b883ce1d037cbbbb588c0b51d20426db68?t=1751469856419" target="_blank" titl="check $MORSE price on Dextools">$MORSE chart</a>
+    <br /><br />
+    <a href="https://linktr.ee/morse404" target="_blank" title="Morse linktree">Other important Morse links</a>
+  </div><br />
+  <div id="credit">a tiny app by <a href="https://x.com/bjjs_20" target="_blank">BJJS</a></div>
+    </div>
+  </div>
+  <div id="app-signature"><a href="https://github.com/bjjs20/morse-translator" title="source code">Download the Chrome + Web App source</a></div>
+  <script src="morse.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

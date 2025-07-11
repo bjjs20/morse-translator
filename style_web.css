@@ -1,0 +1,175 @@
+html, body {
+  font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple  Color Emoji", "Segoe UI Emoji";
+  height: 100%;
+  margin: 0;
+  background-image: linear-gradient(#000, #573BFF);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  flex-direction: column;
+  gap: 16px;
+}
+    
+#app-container {
+  width: 325px;
+  height: 525px;
+  border-radius: 16px;
+  box-shadow: 0 0 20px #91F4E8;
+  border: 1px solid #e9eaff;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+#app-body {
+  background-image: linear-gradient(#573BFF, #666BFC);
+  color: #e9eaff;
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+#app-signature {
+  width: 325px;
+  text-align:center;
+  opacity: 0.5;
+  margin-top: 5px;
+  font-size:11px;
+}
+
+textarea {
+  width: 89%;
+  height: 80px;
+  margin-bottom: 10px;
+  background-color: #E9EAFF;
+  color: #000000;
+}
+
+h1 {
+  display: flex;
+  align-items: center;
+  margin:3px 0px 1px 0px;
+  padding: 0px;
+  font-size:27px;
+}
+
+h3 {
+  margin:3px 0px 1px 0px;
+  padding: 0px;
+  font-size:12px;
+  font-weight:normal;
+}
+
+a:hover {
+   text-decoration: underline;
+}
+ 
+a { 
+   color: white;
+   text-decoration: none;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px 5px 15px 5px;
+}
+
+.soundButtonPlay {
+ position: relative;
+ cursor: pointer;
+ font-size: 20px;
+}
+
+.soundButtonSave {
+ position: relative;
+ cursor: pointer;
+ font-size: 20px;
+}
+
+.soundButtonLoad {
+ position: relative;
+ cursor: pointer;
+}
+
+#randomIconContainer {
+  width: 64px;
+  height: 64px;
+  float: left;
+}
+
+#titleContainer {
+  height: 64px;
+  padding-left:75px;
+}
+
+#fileLoad{
+   font-size: 15px;
+   margin-bottom: 5px;
+}
+
+#detectedWPM{
+  font-style:italic;
+}
+
+#wpm{
+  width: 43px;
+  font-size: 12px;
+}
+
+#wpmBlock{
+  font-size: 12px;
+}
+
+#wavInput{
+  display:none;
+}
+
+#soundButtonsInput {
+  position: relative;
+  top:-65px;
+  left:8px;
+  float: right;
+  width:10%;
+}
+
+#soundButtonsOutput {
+  position: relative;
+  top:-65px;
+  left:8px;
+  float: right;
+  width:10%;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+button {
+  flex: 1;
+  margin: 0 5px;
+  padding: 8px;
+  cursor: pointer;
+}
+
+#tools {
+   text-align: center;
+}
+
+#credit {
+   margin-top: 9px;
+   text-align: center;
+   font-size: 70%;
+}
+
+#randomIcon {
+  transition: opacity 0.4s ease-in-out;
+}
+.fade-out {
+  opacity: 0;
+}
+.fade-in {
+  opacity: 1;
+}
