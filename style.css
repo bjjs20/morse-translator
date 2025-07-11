@@ -102,6 +102,7 @@ a {
   top:-65px;
   left:8px;
   float: right;
+  text-align:center;
   width:10%;
 }
 
@@ -110,6 +111,7 @@ a {
   top:-65px;
   left:8px;
   float: right;
+  text-align:center;
   width:10%;
 }
 
@@ -131,7 +133,7 @@ button {
 #credit {
    margin-top: 9px;
    text-align: center;
-   font-size: 70%;
+   font-size: 9px;
 }
 
 #randomIcon {
