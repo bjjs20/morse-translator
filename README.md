@@ -42,6 +42,9 @@ morse-translator/
 ├── style.css        # Styling for the popup
 ├── manifest.json    # Extension configuration
 ├── icon.png         # Toolbar icon
+├── index.html       # Index file for the website version (no use for the chrome app)
+├── style_web.css    # Styling for the website version (no use for the chrome app)
+├── favicon.ico      # Websute icon (no use for the chrome app)
 └── morses/          # Image folder (1.png to 8.png)
 ```
 
