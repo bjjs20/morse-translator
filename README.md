@@ -1,4 +1,4 @@
-# 🐶🤖 Morse Translator Chrome Extension
+# 🐶🤖 The Morselator Chrome Extension
 
 This Chrome extension lets you:
 - 🔁 Translate text ↔ Morse code
@@ -23,6 +23,12 @@ This Chrome extension lets you:
 5. Select the `morse-translator` folder
 
 You should now see the Morse Translator icon in your Chrome toolbar 🎉
+
+---
+
+## 🌐 A web app is available too
+
+[www.morselator.ooo](https://www.morselator.ooo)
 
 ---
 
@@ -78,3 +84,4 @@ Want to support me? [deposit on Mitosis Expedition with my ref Code](https://app
 MurinXDA for the Morse tools linked in the app [MurinXDA](https://x.com/murinXDA)
 Kumatycoon for the Morse analytics link on Dune [Kumatycoon](https://x.com/chockymilkLLC)
 Eddy for the Morse ranking link on Dune [Eddy](https://x.com/0xEddy1)
+v1z for finding the name Morselator [v1z](https://x.com/v1z1337)
