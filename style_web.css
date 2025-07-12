@@ -8,7 +8,13 @@ html, body {
   justify-content: center;
   font-size: 12px;
   flex-direction: column;
-  gap: 16px;
+  gap: 8px;
+}
+
+#container {
+  width: 325px;
+  height: 545px;
+  position: relative;
 }
     
 #app-container {
@@ -33,10 +39,24 @@ html, body {
 
 #app-signature {
   width: 325px;
+  height: 15px;
   text-align:center;
   opacity: 0.5;
   margin-top: 5px;
   font-size:11px;
+/**  border:1px solid red; **/
+}
+
+#download-chrome-app {
+  width: 32px;
+  position:absolute;
+  top:65px;
+  left:319.5px;
+  rotate: 90deg;
+}
+
+#download-chrome-app img {
+  width: 25px;
 }
 
 textarea {
