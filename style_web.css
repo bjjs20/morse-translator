@@ -82,6 +82,15 @@ h3 {
   font-weight:normal;
 }
 
+#app-body a:hover {
+   text-decoration: none;
+}
+ 
+#app-body a { 
+   color: white;
+   text-decoration: underline;
+}
+
 a:hover {
    text-decoration: underline;
 }
@@ -161,6 +170,7 @@ a {
 #soundButtonsOutput {
   position: relative;
   top:-67px;
+  margin-bottom:-67px;
   left:8px;
   text-align:center;
   float: right;
@@ -179,6 +189,7 @@ button {
 }
 
 #tools {
+   margin-top: 5px;
    text-align: center;
 }
 
