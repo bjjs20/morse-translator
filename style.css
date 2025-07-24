@@ -33,12 +33,12 @@ h3 {
 }
 
 a:hover {
-   text-decoration: underline;
+   text-decoration: none;
 }
  
 a { 
    color: white;
-   text-decoration: none;
+   text-decoration: underline;
 }
 
 .buttons {
@@ -109,6 +109,7 @@ a {
 #soundButtonsOutput {
   position: relative;
   top:-65px;
+  margin-bottom:-67px;
   left:8px;
   float: right;
   text-align:center;
@@ -127,6 +128,7 @@ button {
 }
 
 #tools {
+   margin-top: 5px;
    text-align: center;
 }
 
